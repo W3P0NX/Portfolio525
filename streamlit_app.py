@@ -20,13 +20,6 @@ tqdm.pandas()
 from spacy.language import Language
 from spacy_langdetect import LanguageDetector
 
-# from spacy.cli import download
-# download("en_core_web_sm")
-#
-# from nltk.corpus import stopwords
-# nltk.download('stopwords')
-# ", ".join(stopwords.words('english'))
-
 logging.disable(logging.WARNING)
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
 
@@ -75,16 +68,44 @@ def load_data():
         df_all_data = pd.read_csv(data_file)
         df_all_data.to_csv(os.path.join(input_path, 'twcs.csv'), index=False)
 
-st.title("NLP Chatbot")
+        st.header("Data Statistics")
+        st.write(df_all_data.describe())
+
+        return df_all_data
+
+@st.cache_data
+def filter_aa_tweets(a_dataframe):
+    a_dataframe['text'] = a_dataframe['text'].astype('string')
+    a_dataframe['author_id'] = a_dataframe['author_id'].astype('string')
+
+    first_inbound = a_dataframe[pd.isnull(a_dataframe.in_response_to_tweet_id) & a_dataframe.inbound]
+    df = pd.merge(first_inbound, a_dataframe, left_on='tweet_id',
+                  right_on='in_response_to_tweet_id')
+    df['in_response_to_tweet_id_y'] = df['in_response_to_tweet_id_y'].astype('int64')
+
+    questions_responses = df[["author_id_x", "created_at_x", "text_x", "author_id_y", "created_at_y", "text_y"]]
+    aa = questions_responses[questions_responses["author_id_y"] == "AmericanAir"]
+
+    st.header("Data Header")
+    st.write(df.describe())
+
+    return aa
+
+st.title("Portfolio Project C525")
 
 st.write("""
-# American Airlines Twitter
-Which one is the best?
+## American Airlines Twitter - NLP Chatbot
+This Chatbot was developed using the American Airlines Twitter Data from Kaggle.  Please wait while data is downloaded.
 """)
 
-dataset_name = st.sidebar.selectbox("Select Dataset", ("Iris", "Breast Cancer", "Wine"))
-st.write(dataset_name)
-
 if __name__ == "__main__":
-    load_data()
-    print(f"{dataset_name} Loading....DONE")
+    df_all = load_data()
+    print(f"Loading....DONE")
+    st.write("""
+    Please wait while data is filtered down to American Airlines Questions & Responses
+    """)
+    QnR = filter_aa_tweets(df_all)
+    print(f"Filtering...DONE")
+    print(QnR.info())
+    print(QnR.describe())
+    print(QnR.head(5))
