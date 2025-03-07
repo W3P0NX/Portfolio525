@@ -1,0 +1,5 @@
+spacy
+pandas
+nltk
+matplotlib
+kagglehub

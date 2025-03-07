@@ -38,7 +38,7 @@ if not os.path.exists(output_path):
 model_file_path = os.path.join(output_path, 'classifier_model.pkl')
 
 @st.cache_data
-def load_data():
+def download_data():
     from spacy.cli import download
     download("en_core_web_sm")
 
@@ -95,11 +95,12 @@ st.title("Portfolio Project C525")
 
 st.write("""
 ## American Airlines Twitter - NLP Chatbot
-This Chatbot was developed using the American Airlines Twitter Data from Kaggle.  Please wait while data is downloaded.
+This Chatbot was developed using the American Airlines Twitter Data from Kaggle.  
+Please wait while data is downloaded.
 """)
 
 if __name__ == "__main__":
-    df_all = load_data()
+    df_all = download_data()
     print(f"Loading....DONE")
     st.write("""
     Please wait while data is filtered down to American Airlines Questions & Responses
