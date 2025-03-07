@@ -3,4 +3,5 @@ pandas
 nltk
 matplotlib
 kagglehub
+streamlit
 spacy_langdetect
