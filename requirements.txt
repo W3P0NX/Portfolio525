@@ -4,5 +4,6 @@ nltk
 matplotlib
 kagglehub
 streamlit
+sklearn
 spacy_langdetect
 huggingface_hub
