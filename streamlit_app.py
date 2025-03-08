@@ -114,7 +114,7 @@ if __name__ == "__main__":
     # df_all = download_data()
     # load_classifier_model()
 
-    @st.cache_data
+    # @st.cache_data
     with open(hug_model_path, 'rb') as f:
         print("Loading model from Hugging Face")
     model = pickle.load(f)
