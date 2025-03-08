@@ -8,7 +8,6 @@ import matplotlib.pyplot as plt
 import kagglehub
 print(f"kagglehub version: {kagglehub.__version__}")
 import streamlit as st
-import sklearn
 import pickle
 import ssl
 import logging
@@ -96,12 +95,12 @@ def filter_aa_tweets(a_dataframe):
 
     return aa
 
-@st.cache_data
-def load_classifier_model():
-    with open(hug_model_path, 'rb') as f:
-        print("Loading model from Hugging Face")
-    model = pickle.load(f)
-    return model
+# @st.cache_data
+# def load_classifier_model():
+#     with open(hug_model_path, 'rb') as f:
+#         print("Loading model from Hugging Face")
+#     model = pickle.load(f)
+#     return model
 
 st.title("Portfolio Project C525")
 
@@ -113,7 +112,13 @@ Please wait while data is downloaded.
 
 if __name__ == "__main__":
     # df_all = download_data()
-    load_classifier_model()
+    # load_classifier_model()
+
+    @st.cache_data
+    with open(hug_model_path, 'rb') as f:
+        print("Loading model from Hugging Face")
+        model = pickle.load(f)
+
     print(f"Loading....DONE")
     # st.write("""
     # Please wait while data is filtered down to American Airlines Questions & Responses
