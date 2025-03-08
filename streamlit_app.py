@@ -8,6 +8,7 @@ import matplotlib.pyplot as plt
 import kagglehub
 print(f"kagglehub version: {kagglehub.__version__}")
 import streamlit as st
+import sklearn
 import pickle
 import ssl
 import logging

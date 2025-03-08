@@ -6,3 +6,4 @@ kagglehub
 streamlit
 spacy_langdetect
 huggingface_hub
+sklearn
