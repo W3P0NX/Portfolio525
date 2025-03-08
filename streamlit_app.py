@@ -14,8 +14,6 @@ import ssl
 import logging
 import os
 
-import variables
-
 from tqdm import tqdm
 tqdm.pandas()
 
@@ -103,6 +101,19 @@ def filter_aa_tweets(a_dataframe):
 #     model = pickle.load(f)
 #     return model
 
+def get_intent(text):
+    return model.predict([text])[0]
+
+def chatbot():
+    print("\nWelcome to American Airlines Twitter Chat.  How can I assist you today?")
+    while True:
+        user_input = input("You: ")
+        if user_input.lower() in ['exit', 'quit', 'bye']:
+            print("Chatbot: Thank you for flying American Airlines! Goodbye.")
+            break
+        intent = get_intent(user_input)
+        print(f"Chatbot: {intent}\n")
+
 st.title("Portfolio Project C525")
 
 st.write("""
@@ -119,6 +130,9 @@ if __name__ == "__main__":
     with open(hug_model_path, 'rb') as f:
         print("Loading model from Hugging Face")
         model = pickle.load(f)
+        st.write("""
+        Model download done
+        """)
 
     print(f"Loading....DONE")
     # st.write("""
