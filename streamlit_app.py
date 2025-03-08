@@ -8,6 +8,7 @@ import matplotlib.pyplot as plt
 import kagglehub
 print(f"kagglehub version: {kagglehub.__version__}")
 import streamlit as st
+import pickle
 import ssl
 import logging
 import os
@@ -16,6 +17,8 @@ import variables
 
 from tqdm import tqdm
 tqdm.pandas()
+
+from huggingface_hub import hf_hub_download
 
 from spacy.language import Language
 from spacy_langdetect import LanguageDetector
@@ -36,6 +39,7 @@ if not os.path.exists(output_path):
     os.mkdir(output_path)
 
 model_file_path = os.path.join(output_path, 'classifier_model.pkl')
+hug_model_path = hf_hub_download(repo_id="W3P0NX/ModelTest", filename="classifier_model.pkl")
 
 @st.cache_data
 def download_data():
@@ -91,6 +95,13 @@ def filter_aa_tweets(a_dataframe):
 
     return aa
 
+@st.cache_data
+def load_classifier_model():
+    with open(hug_model_path, 'rb') as f:
+        print("Loading model from Hugging Face")
+    model = pickle.load(f)
+    return model
+
 st.title("Portfolio Project C525")
 
 st.write("""
@@ -100,13 +111,14 @@ Please wait while data is downloaded.
 """)
 
 if __name__ == "__main__":
-    df_all = download_data()
+    # df_all = download_data()
+    load_classifier_model()
     print(f"Loading....DONE")
-    st.write("""
-    Please wait while data is filtered down to American Airlines Questions & Responses
-    """)
-    QnR = filter_aa_tweets(df_all)
-    print(f"Filtering...DONE")
-    print(QnR.info())
-    print(QnR.describe())
-    print(QnR.head(5))
+    # st.write("""
+    # Please wait while data is filtered down to American Airlines Questions & Responses
+    # """)
+    # QnR = filter_aa_tweets(df_all)
+    # print(f"Filtering...DONE")
+    # print(QnR.info())
+    # print(QnR.describe())
+    # print(QnR.head(5))
