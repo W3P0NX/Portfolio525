@@ -135,11 +135,24 @@ if __name__ == "__main__":
         """)
 
     print(f"Loading....DONE")
-    # st.write("""
-    # Please wait while data is filtered down to American Airlines Questions & Responses
-    # """)
-    # QnR = filter_aa_tweets(df_all)
-    # print(f"Filtering...DONE")
-    # print(QnR.info())
-    # print(QnR.describe())
-    # print(QnR.head(5))
+
+    if "messages" not in st.session_state:
+        st.session_state.messages = []
+
+    for message in st.session_state.messages:
+        with st.chat_message(message["role"]):
+            st.markdown(message["content"])
+
+    # React to user input
+    if prompt := st.chat_input("What is going on?: "):
+        # Display user message in chat message container
+        st.chat_message("user").markdown(prompt)
+        # Add user message to chat history
+        st.session_state.messages.append({"role": "user", "content": prompt})
+
+        response = model.predict([prompt])[0]
+        # Display assistant response in chat message container
+        with st.chat_message("assistant"):
+            st.markdown(response)
+        # Add assistant response to chat history
+        st.session_state.messages.append({"role": "assistant", "content": response})
