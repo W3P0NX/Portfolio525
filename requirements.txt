@@ -1,8 +1,4 @@
-spacy
-pandas
-nltk
 kagglehub
 streamlit>=1.8.1
 scikit-learn
-spacy_langdetect
 huggingface_hub
