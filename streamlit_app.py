@@ -9,9 +9,11 @@ import os
 
 from huggingface_hub import hf_hub_download
 
+# Logging Level
 logging.disable(logging.WARNING)
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
 
+# Hugging Face Model Repository
 hug_model_path = hf_hub_download(repo_id="W3P0NX/ModelTest", filename="classifier_model.pkl")
 
 @st.cache_resource
