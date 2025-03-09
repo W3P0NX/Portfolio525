@@ -14,6 +14,7 @@ os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
 # Hugging Face Model Repository
 hug_model_path = hf_hub_download(repo_id="W3P0NX/ModelTest", filename="classifier_model.pkl")
 
+# Method to load Classifier Model
 @st.cache_resource
 def load_classifier_model(a_file):
         print("Loading model from Hugging Face")
