@@ -1,5 +1,3 @@
-import kagglehub
-print(f"kagglehub version: {kagglehub.__version__}")
 import streamlit as st
 import sklearn
 print(f"sklearn version: {sklearn.__version__}")
