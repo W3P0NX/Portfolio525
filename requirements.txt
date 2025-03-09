@@ -1,7 +1,6 @@
 spacy
 pandas
 nltk
-matplotlib
 kagglehub
 streamlit>=1.8.1
 scikit-learn
