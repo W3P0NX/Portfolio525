@@ -94,11 +94,10 @@ def filter_aa_tweets(a_dataframe):
 
     return aa
 
-@st.cache_data
+@st.cache_resource
 def load_classifier_model(a_file):
         print("Loading model from Hugging Face")
-        a_model = pickle.load(a_file)
-        return a_model
+        return pickle.load(a_file)
 
 def get_intent(text):
     return model.predict([text])[0]
@@ -128,9 +127,9 @@ if __name__ == "__main__":
     # @st.cache_data
     # @st.cache_data
     with open(hug_model_path, 'rb') as f:
-        print("Loading model from Hugging Face")
-        # model = load_classifier_model(f)
-        model = pickle.load(f)
+        # print("Loading model from Hugging Face")
+        model = load_classifier_model(f)
+        # model = pickle.load(f)
         st.write("""
         Model download done
         """)
