@@ -129,8 +129,8 @@ if __name__ == "__main__":
     # @st.cache_data
     with open(hug_model_path, 'rb') as f:
         print("Loading model from Hugging Face")
-        model = load_classifier_model(f)
-        # model = pickle.load(f)
+        # model = load_classifier_model(f)
+        model = pickle.load(f)
         st.write("""
         Model download done
         """)
